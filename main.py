@@ -35,9 +35,6 @@ if __name__ == '__main__':
     for x in range(1, 9):
         spider.append(Stack('Spades'))
 
-    print(spider)
-    print(len(spider))
-
     # Create a single pack from the Stacks
     full_pack = []
     for x in spider:
@@ -48,14 +45,28 @@ if __name__ == '__main__':
     print(type(full_pack))
     print(len(full_pack))
 
+
     # Deal out 10 piles
     # 4 Piles of 6 and 6 Piles of 5
     # Total of 54 cards
 
-    game = {'pile1' : []}
+    for x in range(1, 5):
+        for y in range(1, 7):
+            print(x, y)
 
-    for stack in range(1, 11):
-        print ('pile', x)
+    for x in range(1, 7):
+        for y in range(1, 6):
+            print(x, y)
+
+
+    exit()
+    game = {'pile1': [],
+            'pile2': []
+            }
+
+    for idx, card in enumerate(full_pack):
+        print (idx, card)
+
 
     exit()
 
