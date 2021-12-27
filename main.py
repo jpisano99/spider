@@ -29,7 +29,17 @@ def get_card():
 
 if __name__ == '__main__':
 
+
+    print (chr(128013))
+
+    print(b'e')
+    exit()
+
     spider = []
+
+    jim = Card('Heart', 2, 'jim')
+    print(jim)
+    exit()
 
     # Create 8 Random Stacks
     for x in range(1, 9):
