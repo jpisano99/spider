@@ -1,5 +1,4 @@
 import random
-import base64
 import hashlib
 #
 # Definitions
@@ -31,7 +30,7 @@ class Card:
         serial_bytes = bytes(suit, 'utf-8') + bytes(str(value), 'utf-8') + bytes(str(self.global_id), 'utf-8')
         hash_val = hashlib.md5(serial_bytes).hexdigest()
 
-        self.id = hash_val # MD5
+        self.id = hash_val  # MD5
         self.global_id = self.global_id
         self.suit_glyph = glyph_dict[suit]
         self.suit = suit
@@ -84,19 +83,3 @@ class Deck:
     def __repr__(self):
         rep = 'This is a deck of ' + str(len(self.cards)) + ' cards'
         return rep
-
-
-
-
-
-# random.shuffle(card_values)
-
-# if card_type == 'random':
-#     self.id = hash_val
-#     self.card_type = card_type
-#     self.suit = random.randrange(1, 5, 1)
-#     self.value = random.randrange(1, 14, 1)
-#
-#     self.suit = suit_dict.get(self.suit)
-#     self.value = value_dict.get(self.value, str(self.value))
-#else:
