@@ -1,47 +1,41 @@
 import random
-from deck import Stack
+from deck import Stack, Pile
 
 
-def get_card():
-    my_suit = random.randrange(1, 5, 1)
-    my_card = random.randrange(1, 14, 1)
+def setup():
+    # Build a Spider Solitaire Deck of 8 stacks (104 cards)
+    spider_deck = []
 
-    if my_suit == 1:
-        my_suit = 'Spades'
-    elif my_suit == 2:
-        my_suit = 'Clubs'
-    elif my_suit == 3:
-        my_suit = 'Hearts'
-    elif my_suit == 4:
-        my_suit = 'Diamonds'
+    # Create 8 well shuffled Stacks
+    for x in range(1, 9):
+        # Create and Shuffle this one stack
+        tmp_stack = Stack("Spades")
+        tmp_stack.shuffle()
+        for card in tmp_stack.cards:
+            spider_deck.append(card)
 
-    if my_card == 1:
-        my_card = 'Ace'
-    elif my_card == 11:
-        my_card = 'Jack'
-    elif my_card == 12:
-        my_card = 'Queen'
-    elif my_card == 13:
-        my_card = 'King'
+    # Shuffle entire deck
+    random.shuffle(spider_deck)
 
-    print(f'Card {my_card} of {my_suit}')
+    # for x in range(len(spider_deck)):
+    #     print(spider_deck[x].str_val, ' of ', spider_deck[x].suit, spider_deck[x].global_id)
+    print()
+    print ('This deck has '+ str(len(spider_deck)) + ' cards')
+
+    # Create 10 piles (4 piles of 6 cards and 6 piles of 5 cards)
+    spider_field = []
+    for x in range(0, 4):
+        spider_field.append(Pile(spider_deck, 6))
+
+    for x in range(0, 6):
+        spider_field.append(Pile(spider_deck, 5))
+
+    print()
+    print('Created ', len(spider_field), ' piles')
+    print ("Cards Remaining: ", len(spider_deck))
+
+    return
 
 
 if __name__ == '__main__':
-    spider = []
-
-    # Create 8 Random Stacks
-    for x in range(1, 9):
-        tmp_stack = Stack("Spades")
-        tmp_stack.shuffle()
-
-        for card in tmp_stack.cards:
-            spider.append(card)
-
-    print(type(spider))
-    random.shuffle(spider)
-
-    for x in range(len(spider)):
-        print(spider[x].str_val, ' of ', spider[x].suit, spider[x].global_id)
-
-    exit()
+    setup()

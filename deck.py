@@ -83,3 +83,22 @@ class Deck:
     def __repr__(self):
         rep = 'This is a deck of ' + str(len(self.cards)) + ' cards'
         return rep
+
+
+class Pile:
+
+    def __init__(self, spider_deck, num_of_cards):
+        self.pile = []
+
+        for x in range(0, num_of_cards):
+            self.pile.append(spider_deck.pop(x))
+
+        # Make the last card visible
+        self.pile[x].visible = True
+
+        # for card in self.pile:
+        #     print(card.global_id, card.suit, card.str_val, card.visible)
+        # print()
+        #
+        # print()
+        # print('Deck now has ', len(spider_deck))
