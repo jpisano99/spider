@@ -39,11 +39,17 @@ class Card:
         self.visible = False
 
         # print('global id', Card.global_id, str_val + ' of ' + suit)
+        return
 
     def __repr__(self):
-        rep = 'Your Card is a ' + str(self.str_val) + \
+        if self.visible:
+            card_status = 'Face Up'
+        else:
+            card_status = 'Face Down'
+        rep = 'Your Card id ' + str(self.global_id) + ' is a ' + self.str_val + \
               ' of ' + self.suit + ' ' + self.suit_glyph + \
-              ' with a md5 hash of ' + str(self.id)
+              ' it is ' + card_status
+              # ' with a md5 hash of ' + str(self.id)
         return rep
 
 
@@ -55,9 +61,11 @@ class Stack:
 
         for idx in range(1, 14):
             self.cards.append(Card(suit, idx))
+        return
 
     def shuffle(self):
         random.shuffle(self.cards)
+        return
 
     def __repr__(self):
         rep = 'This is a stack of ' + str(self.cards[1].suit)
@@ -79,6 +87,7 @@ class Deck:
 
     def shuffle(self):
         random.shuffle(self.cards)
+        return
 
     def __repr__(self):
         rep = 'This is a deck of ' + str(len(self.cards)) + ' cards'
@@ -87,18 +96,38 @@ class Deck:
 
 class Pile:
 
+    global_pile_id = 0
+
     def __init__(self, spider_deck, num_of_cards):
-        self.pile = []
+        Pile.global_pile_id += 1
+
+        self.pile_id = Pile.global_pile_id
+        self.cards = []
 
         for x in range(0, num_of_cards):
-            self.pile.append(spider_deck.pop(x))
+            self.cards.append(spider_deck.pop(x))
 
         # Make the last card visible
-        self.pile[x].visible = True
+        self.cards[x].visible = True
 
-        # for card in self.pile:
-        #     print(card.global_id, card.suit, card.str_val, card.visible)
-        # print()
-        #
-        # print()
-        # print('Deck now has ', len(spider_deck))
+    def get_top_card(self):
+        top_card = self.cards[-1]
+        return top_card
+
+    def reveal_pile(self):
+        print('This is pile ', str(self.pile_id))
+        for card in self.cards:
+            print ('\t\t', card.global_id, card.str_val, card.suit, card.visible)
+        return
+
+    def remove_card(self, card):
+        removed_card = self.cards[-1]
+        del self.cards[-1]
+        return removed_card
+
+    def add_card(self, card):
+        self.cards.append(card)
+        return
+
+
+
