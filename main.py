@@ -53,13 +53,16 @@ def find_match(spider_piles):
 
     for pile_num, this_pile in enumerate(spider_piles):
         this_card = this_pile.get_top_card()
+        # this_pile.reveal_pile()
+
         print ("Pile  ", this_pile.pile_id, ' has ', len(this_pile.cards), ' cards', '\t', this_card)
 
         if this_card.int_value > src_card_val:
             src_card_val = this_card.int_value
             src_card_pile = this_pile
             src_card = this_card
-    exit()
+
+    #print ('\t\t High card', src_card)
 
     #
     # Find the next highest card and see if its a match
@@ -98,15 +101,11 @@ def find_match(spider_piles):
 
     return do_again
 
+
 def show_piles(spider_piles):
-
-    for idx, this_pile in enumerate(spider_piles):
-        # print(idx + 1, this_pile.cards)
-        for card in this_pile.cards:
-            print (card.suit, '\t', card.str_val, '\t\t', card.visible)
+    for this_pile in spider_piles:
+        this_pile.reveal_pile()
         print()
-
-
     return
 
 
@@ -122,11 +121,9 @@ def card_move(src_card_pile, src_card, dest_card_pile, dest_card):
 
 
 if __name__ == '__main__':
-
     spider_deck, spider_piles = setup()
 
     # show_piles(spider_piles)
-
 
     for x in range(0, 4):
         if find_match(spider_piles) is False:

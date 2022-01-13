@@ -43,12 +43,12 @@ class Card:
 
     def __repr__(self):
         if self.visible:
-            card_status = 'Face Up'
+            self.card_status = 'Face Up'
         else:
-            card_status = 'Face Down'
+            self.card_status = 'Face Down'
         rep = 'Your Card id ' + str(self.global_id) + ' is a ' + self.str_val + \
               ' of ' + self.suit + ' ' + self.suit_glyph + \
-              ' it is ' + card_status
+              ' it is ' + self.card_status
               # ' with a md5 hash of ' + str(self.id)
         return rep
 
@@ -95,6 +95,7 @@ class Deck:
 
 
 class Pile:
+    # A class for one of the 10 piles on the spider board
 
     global_pile_id = 0
 
@@ -102,23 +103,30 @@ class Pile:
         Pile.global_pile_id += 1
 
         self.pile_id = Pile.global_pile_id
+        self.sequences = []
         self.cards = []
 
+        x = 0
         for x in range(0, num_of_cards):
             self.cards.append(spider_deck.pop(x))
 
-        # Make the last card visible
+        # Make the last card visible and establish the initial sequence
         self.cards[x].visible = True
+        self.sequences.append(self.cards[x])
 
     def get_top_card(self):
         top_card = self.cards[-1]
         return top_card
 
     def reveal_pile(self):
-        print('This is pile ', str(self.pile_id))
+        print('Pile id: ' +str(self.pile_id))
         for card in self.cards:
-            print ('\t\t', card.global_id, card.str_val, card.suit, card.visible)
+            print ('\t\t Card id: ', card.global_id,'is:', card.str_val, card.suit, card.visible)
+
+        for sequence in self.sequences:
+            print('\t\t\tSequences: ', sequence)
         return
+
 
     def remove_card(self, card):
         removed_card = self.cards[-1]
