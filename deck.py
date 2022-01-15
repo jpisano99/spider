@@ -112,7 +112,7 @@ class Pile:
 
         # Make the last card visible and establish the initial sequence
         self.cards[x].visible = True
-        self.sequences.append(self.cards[x])
+        self.sequences.append([self.cards[x]])
 
     def get_top_card(self):
         top_card = self.cards[-1]

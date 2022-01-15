@@ -41,11 +41,12 @@ def setup():
     return spider_deck, spider_piles
 
 
-def find_match(spider_piles):
+def find_match(matching_run, spider_piles):
     # Find the highest visible cards we can sequence
+    print('Matching Search Run: ', matching_run)
 
     #
-    # Find the highest card
+    # Find the first highest sequence on the board
     #
     src_card_val = 0
     src_card = None
@@ -55,7 +56,8 @@ def find_match(spider_piles):
         this_card = this_pile.get_top_card()
         # this_pile.reveal_pile()
 
-        print ("Pile  ", this_pile.pile_id, ' has ', len(this_pile.cards), ' cards', '\t', this_card)
+        # print ("\tPile  ", this_pile.pile_id, ' has ', len(this_pile.cards), ' cards', '\t', this_card)
+        print("\tPile  ", this_pile.pile_id, ' has ', len(this_pile.sequences), ' sequences', '\t', this_card.str_val, ' of ', this_card.suit)
 
         if this_card.int_value > src_card_val:
             src_card_val = this_card.int_value
@@ -83,12 +85,12 @@ def find_match(spider_piles):
             dest_card_pile = this_pile
 
     print()
-    print('Source Card id ', src_card, ' in pile ', str(src_card_pile.pile_id))
-    print('Potential Dest Card id ', dest_card, ' in pile ', str(dest_card_pile.pile_id))
+    print('\tSource Card id ', src_card, ' in pile ', str(src_card_pile.pile_id))
+    print('\tPotential Dest Card id ', dest_card, ' in pile ', str(dest_card_pile.pile_id))
 
     if dest_card_val + 1 == src_card_val:
-        print('We have a MATCH to Move')
-        card_move(src_card_pile, src_card, dest_card_pile, dest_card)
+        print('\tWe have a MATCH to Move')
+        # card_move(src_card_pile, src_card, dest_card_pile, dest_card)
         do_again = True
     else:
         print('NO MATCH try again !')
@@ -99,6 +101,7 @@ def find_match(spider_piles):
     # Move Card to new pile
     # spider_piles
 
+    print()
     return do_again
 
 
@@ -126,6 +129,6 @@ if __name__ == '__main__':
     # show_piles(spider_piles)
 
     for x in range(0, 4):
-        if find_match(spider_piles) is False:
+        if find_match(x, spider_piles) is False:
             break
 
