@@ -53,11 +53,22 @@ def find_match(matching_run, spider_piles):
     src_card_pile = None
 
     for pile_num, this_pile in enumerate(spider_piles):
-        this_card = this_pile.get_top_card()
-        # this_pile.reveal_pile()
+
+        # Get the last Sequence in this pile
+        print('\tPile number: ', pile_num, 'has this sequence to match', this_pile.sequences[len(this_pile.sequences)-1])
+        seq_to_use_for_match = this_pile.sequences[len(this_pile.sequences)-1]
+
+        # Get the card to use for this match attempt
+        card_to_use_for_match = seq_to_use_for_match[0]
+        print("\tSpecific card to use for match is " + card_to_use_for_match.str_val + ' of ', card_to_use_for_match.suit)
+
+        exit()
+
+        # this_card = this_pile.get_top_card()
+        # # this_pile.reveal_pile()
 
         # print ("\tPile  ", this_pile.pile_id, ' has ', len(this_pile.cards), ' cards', '\t', this_card)
-        print("\tPile  ", this_pile.pile_id, ' has ', len(this_pile.sequences), ' sequences', '\t', this_card.str_val, ' of ', this_card.suit)
+        # print("\tPile  ", this_pile.pile_id, ' has ', len(this_pile.sequences), ' sequences', '\t', this_card.str_val, ' of ', this_card.suit)
 
         if this_card.int_value > src_card_val:
             src_card_val = this_card.int_value

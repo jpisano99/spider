@@ -127,7 +127,6 @@ class Pile:
             print('\t\t\tSequences: ', sequence)
         return
 
-
     def remove_card(self, card):
         removed_card = self.cards[-1]
         del self.cards[-1]
