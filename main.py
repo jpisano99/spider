@@ -48,9 +48,9 @@ def find_match(matching_run, spider_piles):
     #
     # Find the first highest sequence on the board
     #
-    src_card_val = 0
+    # src_card_val = 0
     src_card = None
-    src_card_pile = None
+    # src_card_pile = None
 
     for pile_num, this_pile in enumerate(spider_piles):
 
@@ -59,8 +59,9 @@ def find_match(matching_run, spider_piles):
         seq_to_use_for_match = this_pile.sequences[len(this_pile.sequences)-1]
 
         # Get the card to use for this match attempt
-        card_to_use_for_match = seq_to_use_for_match[0]
-        print("\tSpecific card to use for match is " + card_to_use_for_match.str_val + ' of ', card_to_use_for_match.suit)
+        src_card = seq_to_use_for_match[0]
+
+        print("\tSpecific card to use for match is " + src_card.str_val + ' of ', src_card.suit)
 
         exit()
 
