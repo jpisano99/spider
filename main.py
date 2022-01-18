@@ -48,35 +48,31 @@ def find_match(matching_run, spider_piles):
     #
     # Find the first highest sequence on the board
     #
-    # src_card_val = 0
-    src_card = None
-    # src_card_pile = None
+    mv_card_val = 0
+    mv_card = None
+    this_pile = None
+    mv_pile = None
 
     for pile_num, this_pile in enumerate(spider_piles):
 
         # Get the last Sequence in this pile
-        print('\tPile number: ', pile_num, 'has this sequence to match', this_pile.sequences[len(this_pile.sequences)-1])
         seq_to_use_for_match = this_pile.sequences[len(this_pile.sequences)-1]
 
-        # Get the card to use for this match attempt
-        src_card = seq_to_use_for_match[0]
+        # Get the card to use for this match attempt at position 0 in the list
+        mv_card_candidate = seq_to_use_for_match[0]
 
-        print("\tSpecific card to use for match is " + src_card.str_val + ' of ', src_card.suit)
+        print("\tSpecific card to use for match is Card ID: " +
+              str(mv_card_candidate.global_id) + '>>> ' + mv_card_candidate.str_val +
+              ' of ' + mv_card_candidate.suit)
 
-        exit()
+        if mv_card_candidate.int_value > mv_card_val:
+            mv_card_val = mv_card_candidate.int_value
+            mv_pile = this_pile
+            mv_card = mv_card_candidate
 
-        # this_card = this_pile.get_top_card()
-        # # this_pile.reveal_pile()
-
-        # print ("\tPile  ", this_pile.pile_id, ' has ', len(this_pile.cards), ' cards', '\t', this_card)
-        # print("\tPile  ", this_pile.pile_id, ' has ', len(this_pile.sequences), ' sequences', '\t', this_card.str_val, ' of ', this_card.suit)
-
-        if this_card.int_value > src_card_val:
-            src_card_val = this_card.int_value
-            src_card_pile = this_pile
-            src_card = this_card
-
-    #print ('\t\t High card', src_card)
+    print()
+    print ('\t Move from pile', mv_pile.pile_id)
+    print ('\t\t High card', mv_card)
 
     #
     # Find the next highest card and see if its a match
@@ -88,7 +84,7 @@ def find_match(matching_run, spider_piles):
     for pile_num, this_pile in enumerate(spider_piles):
         this_card = this_pile.get_top_card()
 
-        if this_card.int_value >= src_card_val:
+        if this_card.int_value >= mv_card_val:
             continue
         elif this_card.int_value > dest_card_val:
             # This is now the potential dest card
@@ -97,10 +93,11 @@ def find_match(matching_run, spider_piles):
             dest_card_pile = this_pile
 
     print()
-    print('\tSource Card id ', src_card, ' in pile ', str(src_card_pile.pile_id))
+    print('\tSource Card id ', mv_card, ' in pile ', str(mv_pile.pile_id))
     print('\tPotential Dest Card id ', dest_card, ' in pile ', str(dest_card_pile.pile_id))
 
-    if dest_card_val + 1 == src_card_val:
+    exit()
+    if dest_card_val + 1 == mv_card_val:
         print('\tWe have a MATCH to Move')
         # card_move(src_card_pile, src_card, dest_card_pile, dest_card)
         do_again = True
