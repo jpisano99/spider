@@ -1,7 +1,6 @@
 import random
 import time
-from deck import Stack, Pile
-
+from deck import Stack, Pile, Deck, Card
 
 def setup():
     # Build a Spider Solitaire Deck of 8 stacks (104 cards)
@@ -136,9 +135,12 @@ def card_move(src_card_pile, src_card, dest_card_pile, dest_card):
 
 
 if __name__ == '__main__':
+
     spider_deck, spider_piles = setup()
 
-    # show_piles(spider_piles)
+    show_piles(spider_piles)
+    print(spider_piles[9].pile_id)
+    print(spider_piles[9].cards)
 
     for x in range(0, 4):
         if find_match(x, spider_piles) is False:

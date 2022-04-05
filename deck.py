@@ -1,9 +1,10 @@
 import random
 import hashlib
+import json
 #
 # Definitions
 # Stack - 13 cards from Ace to King of a any single suit
-# Deck - 4 Stacks of each suit (Spades, Clubs, Hearts, Diamonds)
+# Deck - 4 Stacks of each suit Total of 52 cards (Spades, Clubs, Hearts, Diamonds)
 # Card - a single card of any suit and any value
 #
 
@@ -13,7 +14,7 @@ class Card:
 
     global_id = 0
 
-    def __init__(self, suit, value):
+    def __init__(self, suit: str, value: int):
         # Create a globally unique ID for this card
         Card.global_id += 1
 
@@ -27,30 +28,29 @@ class Card:
             str_val = value_dict[value]
 
         # Create an MD5 Hash value
-        serial_bytes = bytes(suit, 'utf-8') + bytes(str(value), 'utf-8') + bytes(str(self.global_id), 'utf-8')
+        # serial_bytes = bytes(suit, 'utf-8') + bytes(str(value), 'utf-8') + bytes(str(self.global_id), 'utf-8')
+        serial_bytes = bytes(suit, 'utf-8') + bytes(str(value), 'utf-8')
         hash_val = hashlib.md5(serial_bytes).hexdigest()
 
-        self.id = hash_val  # MD5
+        self.hash_val = hash_val  # MD5
         self.global_id = self.global_id
         self.suit_glyph = glyph_dict[suit]
         self.suit = suit
         self.str_val = str_val
         self.int_value = value
+        self.sequence = 0.0
         self.visible = False
 
-        # print('global id', Card.global_id, str_val + ' of ' + suit)
         return
 
     def __repr__(self):
-        if self.visible:
-            self.card_status = 'Face Up'
-        else:
-            self.card_status = 'Face Down'
-        rep = 'Your Card id ' + str(self.global_id) + ' is a ' + self.str_val + \
-              ' of ' + self.suit + ' ' + self.suit_glyph + \
-              ' it is ' + self.card_status
-              # ' with a md5 hash of ' + str(self.id)
-        return rep
+        _my_card = {}
+        for a in dir(self):
+            if a[:2] != "__":   # exclude any attribute with dunder __
+                # print(a, ': \t', getattr(self, a))
+                _my_card[a] = getattr(self, a)
+
+        return json.dumps(_my_card)
 
 
 class Stack:
@@ -112,6 +112,7 @@ class Pile:
 
         # Make the last card visible and establish the initial sequence
         self.cards[x].visible = True
+        self.cards[x].sequence = self.pile_id + .1
         self.sequences.append([self.cards[x]])
 
     def get_top_card(self):
@@ -121,10 +122,10 @@ class Pile:
     def reveal_pile(self):
         print('Pile id: ' +str(self.pile_id))
         for card in self.cards:
-            print ('\t\t Card id: ', card.global_id,'is:', card.str_val, card.suit, card.visible)
+            print ('\t\t Card id: ', card.global_id, 'is:', '/', card.sequence, card.str_val, card.suit, card.visible)
 
-        for sequence in self.sequences:
-            print('\t\t\tSequences: ', sequence)
+        # for sequence in self.sequences:
+        #     print('\t\t\tSequences: ', sequence)
         return
 
     def remove_card(self, card):
