@@ -139,10 +139,11 @@ if __name__ == '__main__':
     spider_deck, spider_piles = setup()
 
     show_piles(spider_piles)
-    print(spider_piles[9].pile_id)
-    print(spider_piles[9].cards)
+    print(spider_piles[9].sequences)
+    # print(spider_piles[9].cards)
 
-    for x in range(0, 4):
+    for x in range(0, 7):
         if find_match(x, spider_piles) is False:
             break
+
 
